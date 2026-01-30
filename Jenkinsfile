@@ -1,6 +1,6 @@
 pipeline {
     agent { label "${LABEL_NAME}" }
-    enviroment {
+    environment {
         IMAGE_NAME = "simpleapppp"
         IMAGE_TAG = "${BUILD_NUMBER}"
         DOCKER_IMAGE = "${IMAGE_NAME}:${IMAGE_TAG}"
@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage ( 'CODE' ) {
             steps {
-                git url:https:"//github.com/iammay786/agentdocker.git" , branch: "main"                 
+                git url:"https://github.com/iammay786/agentdocker.git" , branch: "main"                 
             }
         }
         stage ( 'build' ) {
