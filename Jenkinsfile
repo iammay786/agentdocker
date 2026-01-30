@@ -1,5 +1,10 @@
 pipeline {
     agent { label "${LABEL_NAME}" }
+    enviroment {
+        IMAGE_NAME = "simpleapp"
+        IMAGE_TAG = "${BUILD_NUMBER}"
+        DOCKER_IMAGE = "${IMAGE_NAME}:${IMAGE_TAG}"
+    }
     stages {
         stage ( 'CODE' ) {
             steps {
@@ -8,7 +13,7 @@ pipeline {
         }
         stage ( 'build' ) {
              steps {
-                 sh "docker build -t simpleapp:1 ."
+                 sh "docker build -t ${DOCKER_IMAGE} ."
              }
         }   
         
@@ -16,7 +21,7 @@ pipeline {
                steps {
                    sh "docker stop c1 || true"
                    sh "docker rm c1 || true"
-                   sh "docker run -d --name c1 -p 80:80 simpleapp:1 sleep infinity"
+                   sh "docker run -d --name c1 -p 80:80 ${DOCKER_IMAGE} sleep infinity"
                    
                }
     }
