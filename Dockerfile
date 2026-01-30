@@ -1,6 +1,6 @@
-FROM nginx
+FROM nginx:latest
 
 RUN rm -rf /usr/share/nginx/html/*
-COPY index.html /usr/share/ngnix/html/
+COPY . /usr/share/ngnix/html/
 
-EXPOSE "80"
+EXPOSE 80
