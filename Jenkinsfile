@@ -1,55 +1,24 @@
 pipeline {
-    agent any
-
-    environment {
-        IMAGE_NAME = "simpleapp"
-        IMAGE_TAG  = "1"
-    }
-
+    agent { label "${LABEL_NAME}" }
     stages {
-
-        stage('Checkout') {
+        stage ( 'CODE' ) {
             steps {
-                checkout scm
+                git url:"https://github.com/Huzefa211/agentdocker.git" , branch: "main"                 
             }
         }
-
-        stage('Verify Files') {
-            steps {
-                sh '''
-                    echo "Workspace content:"
-                    ls -la
-                    echo "Searching for Dockerfile:"
-                    find . -name Dockerfile
-                '''
-            }
-        }
-
-        stage('Build Docker Image') {
-            steps {
-                sh '''
-                    docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
-                '''
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                sh '''
-                    echo "Running container..."
-                    docker rm -f simpleapp || true
-                    docker run -d --name simpleapp -p 8080:8080 ${IMAGE_NAME}:${IMAGE_TAG}
-                '''
-            }
-        }
+        stage ( 'build' ) {
+             steps {
+                 sh "docker build -t simpleapp:1 ."
+             }
+        }   
+        
+         stage ('deploy') {
+               steps {
+                   sh "docker stop c1 || true"
+                   sh "docker rm c1 || true"
+                   sh "docker run -d --name c1 -p 80:80 simpleapp:1 sleep infinity"
+                   
+               }
     }
-
-    post {
-        success {
-            echo "✅ Pipeline completed successfully"
-        }
-        failure {
-            echo "❌ Pipeline failed"
-        }
-    }
+}
 }
