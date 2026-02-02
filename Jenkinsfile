@@ -26,4 +26,11 @@ pipeline {
                }
     }
 }
+    post {
+emailext { body: '''THIS BUILD IS REGARDING THE FAILED BUILD
+for refernce check console output of $(build_number)''', 
+    subject: 'Build FAILED $(BUILD_NUMBER)',
+    to: 'mra582562@gmail.com'
+         }
+         }
 }
