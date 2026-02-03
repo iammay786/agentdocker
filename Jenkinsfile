@@ -1,14 +1,15 @@
 pipeline {
     agent { label "${LABEL_NAME}" }
-    environment {
-        IMAGE_NAME = "simpleapppp"
-        IMAGE_TAG = "${BUILD_NUMBER}"
+    environment { 
+        IMAGE_NAME = "simple12"
+        IMAGE_TAG  = "${BUILD_NUMBER}"
         DOCKER_IMAGE = "${IMAGE_NAME}:${IMAGE_TAG}"
+        
     }
     stages {
         stage ( 'CODE' ) {
             steps {
-                git url:"https://github.com/iammay786/agentdocker.git" , branch: "main"                 
+                git url:"https://github.com/Huzefa211/agentdocker.git" , branch: "main"                 
             }
         }
         stage ( 'build' ) {
@@ -40,11 +41,11 @@ FOR THE REFERENCE CHECK COSNSOLE OUTPUT OF ${BUILD_NUMBER}''',
             body: '''THIS MAIL IS REGARDING THE FAILED BUILD.
 FOR THE REFERENCE CHECK COSNSOLE OUTPUT OF ${BUILD_NUMBER}''', 
     subject: 'WARNING!!!!! Build Failed ${BUILD_NAME}', 
-        to: 'mra582562@gmail.com'
-
+    to: 'mra582562@gmail.com'
             )
         }
 
                 }
-         
+            
+        
 }
