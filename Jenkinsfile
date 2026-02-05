@@ -1,7 +1,7 @@
 pipeline {
     agent { label "${LABEL_NAME}" }
     environment { 
-        IMAGE_NAME = "simplek"
+        IMAGE_NAME = "simple1k"
         IMAGE_TAG  = "${BUILD_NUMBER}"
         DOCKER_IMAGE = "${IMAGE_NAME}:${IMAGE_TAG}"
         
@@ -29,6 +29,8 @@ pipeline {
 }
     post {
         success {
+            archiveArtifacts artifacts: '*.tar'
+            
             emailext(
             body: '''THIS MAIL IS REGARDING THE successful BUILD.
 FOR THE REFERENCE CHECK COSNSOLE OUTPUT OF ${BUILD_NUMBER}''', 
