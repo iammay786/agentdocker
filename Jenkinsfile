@@ -1,12 +1,12 @@
 pipeline {
     agent { label "${LABEL_NAME}" }
     environment { 
-        IMAGE_NAME = "simple1k"
+        IMAGE_NAME = "simple1"
         IMAGE_TAG  = "${BUILD_NUMBER}"
         DOCKER_IMAGE = "${IMAGE_NAME}:${IMAGE_TAG}"
         
     }
-    stages {
+    stages
         stage ( 'CODE' ) {
             steps {
                 git url:"https://github.com/iammay786/agentdocker.git" , branch: "main"                 
